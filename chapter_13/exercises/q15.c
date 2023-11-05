@@ -1,3 +1,12 @@
+/*
+Modify programming project 6 from chapter 10 to include the following function:
+
+int evaluate_RPN_expression(const char *expression);
+
+The function returns the value of the RPN expression pointed to by expression
+
+*/
+
 /* Write a program that evaluates an expression in reverse polish notation using a stack */
 
 #include <stdbool.h>
@@ -5,6 +14,7 @@
 #include <stdlib.h>
 
 #define STACK_SIZE 50
+#define EXPRESSION_LENGTH 30
 
 /* External variables */
 int stack[STACK_SIZE];
@@ -17,17 +27,36 @@ bool is_full(void);
 void push(char c);
 int pop(void);
 
+int read_line(char str[], int n);
+int evaluate_RPN_expression(const char *expression);
+
 // 1 = (int) '1' - 48
 int main(void){
 
-    char ch;
-    char op_1, op_2;
-    bool exit = false;
-
-    printf("Enter an RPN expression: ");
-    scanf(" %c", &ch);
+    char expression[EXPRESSION_LENGTH];
 
     while(1){
+
+        printf("Enter an RPN expression: ");
+
+        read_line(expression, EXPRESSION_LENGTH);
+
+        printf("Expression value: %d\n", evaluate_RPN_expression(expression));
+
+        make_empty();
+
+    }
+
+    return 0;
+}
+
+int evaluate_RPN_expression(const char *expression){
+
+    int i = 0;
+    char ch;
+    char op_1, op_2;
+
+    while((ch = expression[i]) != '\0'){
 
         switch(ch){
 
@@ -52,10 +81,7 @@ int main(void){
                 push(op_1 - op_2);
                 break;
             case '=':
-                printf("Value of expression: %d\n", pop());
-                make_empty();
-                printf("Enter an RPN expression: ");
-                break;
+                return pop();
             case '1':
             case '2':
             case '3':
@@ -69,19 +95,25 @@ int main(void){
                 push((int) ch - 48);
                 break;
             default:
-                exit = true;
-                break;
+                exit(1);
         }
 
-        if(exit){
-            break;
-        }
-
-        scanf(" %c", &ch);
+        i++;
 
     }
+}
 
-    return 0;
+int read_line(char str[], int n){
+    
+    int ch, i = 0;
+
+    while((ch = getchar()) != '\n'){
+        if(i < n && ch != ' '){
+            str[i++] = ch;
+        }
+    }
+    str[i] = '\0';
+    return i;
 }
 
 void make_empty(void){
