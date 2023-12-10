@@ -13,23 +13,23 @@
 #include <stdio.h>
 
 union decimal{
-    float num;
-    struct {
-        unsigned int sign: 1;
+    float value;
+    struct float_value{
+        unsigned int fraction: 23;
         unsigned int exponent: 8;
-        unsigned int frac: 23;
-    }bits;
+        unsigned int sign: 1;
+    }field;
 };
 
 int main(void){
 
     union decimal fraction;
     
-    fraction.bits.sign = 1;
-    fraction.bits.exponent = 128;
-    fraction.bits.frac = 0;
+    fraction.field.sign = 1;
+    fraction.field.exponent = 128;
+    fraction.field.fraction = 0;
 
-    printf("Printed as a float: %.1f\n", fraction.num);
+    printf("Printed as a float: %.1f\n", fraction.value);
 
     return 0;
 }
