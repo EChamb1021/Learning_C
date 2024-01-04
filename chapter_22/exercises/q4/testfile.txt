@@ -1,0 +1,3 @@
+This file has precisely 38 characters.
+This file has precisely 18 words.
+This file has precisely 3 lines.
