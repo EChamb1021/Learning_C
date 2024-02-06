@@ -1,0 +1,5 @@
+This is a text file.
+
+In windows, there is a different line ending for text files.
+
+There is also a different file end character.
