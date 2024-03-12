@@ -1,0 +1,1 @@
+this is a text file that will have the first letter in each word be capitalized.
